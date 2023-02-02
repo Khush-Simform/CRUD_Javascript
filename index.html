@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>PRODUCT - Dashboard</title>
+    <!-- Custom fonts for this template-->
+    <link href="./vendor/fontawesome-free/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="./css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <div class="modal fade" id="addadminprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Product Data</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label> PRODUCT-ID </label>
+                            <input type="text" name="productid" id="productid" class="form-control"
+                                placeholder="Enter Product Id">
+                        </div>
+                        <div class="form-group">
+                            <label> PRODUCT-NAME </label>
+                            <input type="text" name="productname" id="productname" class="form-control"
+                                placeholder="Enter Product Name">
+                        </div>
+                        <div class="form-group">
+                            <label>IMAGE</label>
+                            <img id="imgedit" style="display: none;height:80px; width:80px;" src="" alt="">
+                            <input type="file" name="image" id="image" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>PRICE</label>
+                            <input type="number" name="price" id="price" class="form-control" placeholder="Enter price">
+                        </div>
+                        <div class="form-group">
+                            <label>DESCRIPTION</label>
+                            <textarea name="description" id="description" cols="30" rows="10" class="form-control"
+                                placeholder="Confirm Description"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" id="Submit" style="display: block;" onclick="AddData()"
+                            class="btn btn-primary">Add data</button>
+                        <button type="submit" id="Submit2" style="display: none;"
+                            class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Product Profile
+                        <button type="button" class="btn btn-primary ml-2" data-toggle="modal"
+                            data-target="#addadminprofile">
+                            Add Product
+                        </button>
+                        <div class="btn-group ml-3">
+                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                Filter By
+                            </button>
+                            <div class="dropdown-menu">
+                                <button type="button" onclick="ChangeByPrice()" id="IdFirst"
+                                    class="btn">Product-Id</button>
+                                <button type="button" onclick="ChangeByPrice()" id="nameFirst"
+                                    class="btn">Product-Name</button>
+                                <hr class="dropdown-divider">
+                                <button type="button" onclick="ChangeByPrice()" id="LowFirst" class="btn">(Low to
+                                    High)</button>
+                                <button type="button" onclick="ChangeByPrice()" id="HighFirst" class="btn">(High to
+                                    Low)</button>
+                            </div>
+                        </div><br><br>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Search</label>
+                            <input type="text" class="form-control" onkeyup="searchById()" id="Input1"
+                                placeholder="Search by ID">
+                        </div>
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>PRODUCT-ID</th>
+                                    <th>PRODUCT-NAME</th>
+                                    <th>IMAGE</th>
+                                    <th>PRICE</th>
+                                    <th>DESCRIPTION</th>
+                                    <th>EDIT</th>
+                                    <th>DELETE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data Here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bootstrap core JavaScript-->
+        <script src="./vendor/jquery/jquery.min.js"></script>
+        <script src="./vendor/bootstrap/bootstrap.bundle.min.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="./js/index.js"></script>
+</body>
+
+</html>
