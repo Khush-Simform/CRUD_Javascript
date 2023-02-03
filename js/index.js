@@ -4,6 +4,9 @@ function validateForm() {
     var productname = document.getElementById("productname").value;
     var price = document.getElementById("price").value;
     var description = document.getElementById("description").value;
+    var image = document.getElementById('image');
+    var file = image.value;
+    var extensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
 
     if (productid == "") {
         alert("Product-Id is required");
@@ -15,6 +18,11 @@ function validateForm() {
     }
     if (productname == "") {
         alert("Product Name is required");
+        return false;
+    }
+    if (!extensions.exec(file)) {
+        alert('Invalid file type');
+        fileInput.value = '';
         return false;
     }
     if (price == "") {
@@ -215,7 +223,7 @@ function searchById() {
     }
 }
 
-function ChangeByPrice() {
+function ChangeBy() {
     var productList;
     if (localStorage.getItem("productList") == null) {
         productList = [];
