@@ -16,35 +16,38 @@
         rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="./css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+
 </head>
 
 <body id="page-top">
     <!-- Page Wrapper -->
     <div id="wrapper">
-        <div class="modal fade" id="addadminprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        <div class="modal fade" data-backdrop="static" data-keyboard="false" id="addadminprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add Product Data</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <h5 class="modal-title" id="exampleModalLabel" style="display: block;">Add Product Data</h5>
+                        <h5 class="modal-title" id="data2" style="display: none;">Update Product Data</h5>
+                        <button type="button" onclick="clearData()" id="close" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label> PRODUCT-ID </label>
+                            <label> PRODUCT ID </label>
                             <input type="text" name="productid" id="productid" class="form-control"
                                 placeholder="Enter Product Id">
                         </div>
                         <div class="form-group">
-                            <label> PRODUCT-NAME </label>
+                            <label> PRODUCT NAME </label>
                             <input type="text" name="productname" id="productname" class="form-control"
                                 placeholder="Enter Product Name">
                         </div>
                         <div class="form-group">
                             <label>IMAGE</label>
-                            <img id="imgedit" style="display: none;height:80px; width:80px;" src="" alt="">
+                            <img id="imgedit" style="display: none; height:80px; width:80px;" src="" alt="">
                             <input type="file" name="image" id="image" class="form-control">
                         </div>
                         <div class="form-group">
@@ -58,8 +61,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" id="Submit" style="display: block;" onclick="AddData()"
+                        <button type="button" class="btn btn-secondary" onclick="clearData()" id="cancel" data-dismiss="modal">Close</button>
+                        <button type="submit" id="Submit" style="display: block;" onclick="addData()"
                             class="btn btn-primary">Add data</button>
                         <button type="submit" id="Submit2" style="display: none;"
                             class="btn btn-primary">Update</button>
@@ -81,14 +84,14 @@
                                 Filter By
                             </button>
                             <div class="dropdown-menu">
-                                <button type="button" onclick="ChangeBy()" id="IdFirst"
+                                <button type="button" onclick="changeBy(this.id)" id="IdFirst"
                                     class="btn">Product-Id</button>
-                                <button type="button" onclick="ChangeBy()" id="nameFirst"
+                                <button type="button" onclick="changeBy(this.id)" id="nameFirst"
                                     class="btn">Product-Name</button>
                                 <hr class="dropdown-divider">
-                                <button type="button" onclick="ChangeBy()" id="LowFirst" class="btn">(Low to
+                                <button type="button" onclick="changeBy(this.id)" id="LowFirst" class="btn">(Low to
                                     High)</button>
-                                <button type="button" onclick="ChangeBy()" id="HighFirst" class="btn">(High to
+                                <button type="button" onclick="changeBy(this.id)" id="HighFirst" class="btn">(High to
                                     Low)</button>
                             </div>
                         </div><br><br>
@@ -104,8 +107,8 @@
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>PRODUCT-ID</th>
-                                    <th>PRODUCT-NAME</th>
+                                    <th>PRODUCT ID</th>
+                                    <th>PRODUCT NAME</th>
                                     <th>IMAGE</th>
                                     <th>PRICE</th>
                                     <th>DESCRIPTION</th>
@@ -126,6 +129,7 @@
         <script src="./vendor/bootstrap/bootstrap.bundle.min.js"></script>
         <!-- Custom scripts for all pages-->
         <script src="./js/index.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
 
 </html>
