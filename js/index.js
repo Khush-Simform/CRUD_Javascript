@@ -56,9 +56,6 @@ function validateIdName() {
     }
     return true;
 }
-function setData(){
-    localStorage.setItem('productList', JSON.stringify(productList));
-}
 
 //Function to validate Name while editing data
 function validateName(index) {
@@ -102,21 +99,21 @@ function changeBy(x) {
             productList.sort((a, b) => {
                 return a.price - b.price;
             });
-            setData();
+            localStorage.setItem('productList', JSON.stringify(productList));
             showData();
             break;
         case "highFirst":
             productList.sort((a, b) => {
                 return b.price - a.price;
             });
-            setData();
+            localStorage.setItem('productList', JSON.stringify(productList));
             showData();
             break;
         case "idFirst":
             productList.sort((a, b) => {
                 return a.productid - b.productid;
             });
-            setData();
+            localStorage.setItem('productList', JSON.stringify(productList));
             showData();
             break;
         case "nameFirst":
@@ -125,7 +122,7 @@ function changeBy(x) {
                 var y = b.productname.toLowerCase();
                 return x < y ? -1 : x > y ? 1 : 0;
             });
-            setData();
+            localStorage.setItem('productList', JSON.stringify(productList));
             showData();
             break;
     }
