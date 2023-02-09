@@ -302,20 +302,6 @@ function clearData() {
     productid.disabled = false;
 }
 
-// document.querySelectorAll('#close, #cancel').onclick = function () {
-
-//     document.getElementById("productid").value = "";
-//     document.getElementById("productname").value = "";
-//     document.getElementById("image").src = "";
-//     document.getElementById("price").value = "";
-//     document.getElementById("description").value = "";
-//     document.getElementById("Submit").style.display = "block";
-//     document.getElementById("Submit2").style.display = "none";
-//     document.getElementById("imgedit").style.display = "none";
-//     document.getElementById("exampleModalLabel").style.display = "block";
-//     document.getElementById("data2").style.display = "none";
-// }
-
 //Function to search by id in search bar.
 function searchById() {
     var input, filter, table, tr, td, i, txtValue, j;
