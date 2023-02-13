@@ -5,17 +5,18 @@ function validateForm() {
     var price = document.getElementById("price").value;
     var description = document.getElementById("description").value;
     var regex = /^[^\s][a-zA-Z]+[a-zA-Z0-9 ]*[^\s]$/;
+    var priceRegx = /^[0-9]/;
 
-    if (productid == "" || productname == "" || price == "" || description == "") {
+    if (productid == "" || productname == "" || description == "") {
         alert("All fields are required!");
         return false;
     }
     else if (isNaN(productid)) {
-        alert("Only numeric Value");
+        alert("Please enter only numeric value");
         return false;
     }
-    else if (price < 0) {
-        alert("Price must be positive.")
+    else if (!price.match(priceRegx)) {
+        alert("Price is invalid.")
         return false;
     }
     else if (!description.match(regex) || !productname.match(regex)) {
@@ -44,7 +45,7 @@ function validateIdName() {
     var productid = document.getElementById("productid").value;
     var productname = document.getElementById("productname").value;
     var productList;
-    productList = (localStorage.getItem("productList") == null) ? productList = [] : JSON.parse(localStorage.getItem("productList"));
+    productList = JSON.parse(localStorage.getItem("productList"));
     for (let i = 0; i < productList.length; i++) {
         if (productList[i].productid === productid || productList[i].productname.toLowerCase() === productname.toLowerCase()) {
             swal("Enter unique Product Id And Name!", {
@@ -61,7 +62,7 @@ function validateIdName() {
 function validateName(index) {
     var productname = document.getElementById("productname").value;
     var productList;
-    productList = (localStorage.getItem("productList") == null) ? productList = [] : JSON.parse(localStorage.getItem("productList"));
+    productList = JSON.parse(localStorage.getItem("productList"));
     for (let i = 0; i < productList.length; i++) {
         if (productList[i].productname.toLowerCase() === productname.toLowerCase()) {
             if (productList[index].productname.toLowerCase() === productname.toLowerCase()) {
@@ -79,6 +80,10 @@ function validateName(index) {
     return true;
 }
 
+function setItems(setProductItems){
+    localStorage.setItem('productList', JSON.stringify(setProductItems));
+}
+
 //Function to clear data after using modal
 function clearValue() {
     $('#addAdmin').modal('hide');
@@ -91,29 +96,29 @@ function clearValue() {
 }
 
 //Function to sort/filter
-function changeBy(x) {
+function changeBy(sortId) {
     var productList;
-    productList = (localStorage.getItem("productList") == null) ? productList = [] : JSON.parse(localStorage.getItem("productList"));
-    switch (x) {
+    productList = JSON.parse(localStorage.getItem("productList"));
+    switch (sortId) {
         case "lowFirst":
             productList.sort((a, b) => {
                 return a.price - b.price;
             });
-            localStorage.setItem('productList', JSON.stringify(productList));
+            setItems(productList);
             showData();
             break;
         case "highFirst":
             productList.sort((a, b) => {
                 return b.price - a.price;
             });
-            localStorage.setItem('productList', JSON.stringify(productList));
+            setItems(productList);
             showData();
             break;
         case "idFirst":
             productList.sort((a, b) => {
                 return a.productid - b.productid;
             });
-            localStorage.setItem('productList', JSON.stringify(productList));
+            setItems(productList);
             showData();
             break;
         case "nameFirst":
@@ -122,10 +127,19 @@ function changeBy(x) {
                 var y = b.productname.toLowerCase();
                 return x < y ? -1 : x > y ? 1 : 0;
             });
-            localStorage.setItem('productList', JSON.stringify(productList));
+            setItems(productList);
             showData();
             break;
     }
+}
+
+function alertMsg(){
+    swal({
+        title: 'Data has been recorded!',
+        text: 'Redirecting back...',
+        icon: 'success',
+        timer: 2000,
+    })
 }
 
 //Function to show image while adding or editing
@@ -139,7 +153,6 @@ function readURL(input) {
                 .width(80)
                 .height(80);
         };
-
         reader.readAsDataURL(input.files[0]);
     }
 }
@@ -147,25 +160,20 @@ function readURL(input) {
 //Function to show the input data 
 function showData() {
     var productList;
-    if (localStorage.getItem("productList") == null) {
-        productList = [];
-    }
-    else {
-        productList = JSON.parse(localStorage.getItem("productList"));
-        var html = "";
-        productList.forEach(function (element, index) {
-            html += "<tr>";
-            html += "<td>" + element.productid + "</td>";
-            html += "<td>" + element.productname + "</td>";
-            html += "<td> <img src=" + element.image + " style='height:80px; width:80px;' alt='Image Product' </img></td>";
-            html += "<td> &#8377;" + element.price + "</td>";
-            html += "<td>" + element.description + "</td>";
-            html += "<td> <button onclick='editData(" + index + ")' data-toggle='modal' data-target='#addAdmin' class='btn btn-success'>Edit</button></td>";
-            html += "<td> <button onclick='deleteData(" + index + ")' class='btn btn-danger'>Delete</button></td>";
-            html += "</tr>";
-        });
-        document.querySelector("#dataTable tbody").innerHTML = html;
-    }
+    productList = JSON.parse(localStorage.getItem("productList"));
+    var html = "";
+    productList.forEach(function (element, index) {
+        html += `<tr>
+                <td> ${element.productid} </td>
+                <td> ${element.productname} </td>
+                <td> <img src= "${element.image}" style='height:80px; width:80px;' alt='Image Product'></td>
+                <td> &#8377; ${element.price} </td>
+                <td> ${element.description} </td>
+                <td> <button onclick="editData(${index})" data-toggle='modal' data-target='#addAdmin' class='btn btn-success'>Edit</button></td>
+                <td> <button onclick='deleteData(${index})' class='btn btn-danger'>Delete</button></td>
+                </tr>`;
+    });
+    document.querySelector("#dataTable tbody").innerHTML = html;
 }
 
 //Shows data while windows load.
@@ -173,7 +181,7 @@ document.onload = showData();
 
 //Function to add data
 function addData() {
-    if (validateForm() == true && validateImage() == true && validateIdName() == true) {
+    if (validateForm() && validateImage() && validateIdName()) {
         var productid = document.getElementById("productid").value;
         var productname = document.getElementById("productname").value;
         var image = document.getElementById("image").files[0];
@@ -197,17 +205,14 @@ function addData() {
             showData();
         });
         clearValue();
-        swal("Your data has been Added!", {
-            icon: "success",
-            timer: 2000
-        });
+        alertMsg();
     }
 }
 
 //Function to delete data
 function deleteData(index) {
     var productList;
-    productList = (localStorage.getItem("productList") == null) ? productList = [] : JSON.parse(localStorage.getItem("productList"));
+    productList = JSON.parse(localStorage.getItem("productList"));
     swal({
         title: "Are you sure ??",
         text: "Your will not be able to recover this data!",
@@ -230,13 +235,13 @@ function deleteData(index) {
 
 //Function to edit data
 function editData(index) {
-    document.getElementById("Submit").style.display = "none";
-    document.getElementById("Submit2").style.display = "block";
+    document.getElementById("submit").style.display = "none";
+    document.getElementById("submit2").style.display = "block";
     document.getElementById("exampleModalLabel").style.display = "none";
     document.getElementById("data2").style.display = "block";
     let imgnew = document.getElementById("image");
 
-    productList = (localStorage.getItem("productList") == null) ? productList = [] : JSON.parse(localStorage.getItem("productList"));
+    productList = JSON.parse(localStorage.getItem("productList"));
 
     document.getElementById("productid").value = productList[index].productid;
     document.getElementById("productname").value = productList[index].productname;
@@ -245,9 +250,9 @@ function editData(index) {
     document.getElementById("description").value = productList[index].description;
 
     productid.disabled = true;
-    document.querySelector("#Submit2").onclick = function () {
+    document.querySelector("#submit2").onclick = function () {
         if (imgnew.value == "") {
-            if (validateForm() == true && validateName(index) == true) {
+            if (validateForm() && validateName(index)) {
                 productList[index].productname = document.getElementById("productname").value;
                 productList[index].price = Number(document.getElementById("price").value).toFixed(2);
                 productList[index].description = document.getElementById("description").value;
@@ -255,16 +260,10 @@ function editData(index) {
                 localStorage.setItem("productList", JSON.stringify(productList));
                 showData();
                 clearData();
-                swal({
-                    title: 'Updated Successfully!',
-                    text: 'Redirecting back',
-                    icon: 'success',
-                    timer: 2000,
-                    buttons: false,
-                })
+                alertMsg();
             }
         }
-        else if (validateForm() == true && validateImage() == true && validateName(index) == true) {
+        else if (validateForm() && validateImage() && validateName(index)) {
             let image = imgnew.files[0];
             let reader = new FileReader();
             reader.readAsDataURL(image);
@@ -279,13 +278,7 @@ function editData(index) {
                 localStorage.setItem("productList", JSON.stringify(productList));
                 showData();
                 clearData();
-                swal({
-                    title: 'Updated Successfully!',
-                    text: 'Redirecting back',
-                    icon: 'success',
-                    timer: 2000,
-                    buttons: false,
-                })
+                alertMsg();
             });
         }
     }
@@ -294,9 +287,8 @@ function editData(index) {
 //Function to make display block and none and clear values.
 function clearData() {
     clearValue();
-    document.getElementById("Submit").style.display = "block";
-    document.getElementById("Submit2").style.display = "none";
-    //document.getElementById("imgedit").style.display = "none";
+    document.getElementById("submit").style.display = "block";
+    document.getElementById("submit2").style.display = "none";
     document.getElementById("exampleModalLabel").style.display = "block";
     document.getElementById("data2").style.display = "none";
     productid.disabled = false;
