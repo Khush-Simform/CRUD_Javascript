@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>PRODUCT - Dashboard</title>
+    <link href="./vendor/fontawesome-free/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <link href="./css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+
+</head>
+
+<body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <div class="modal fade" data-backdrop="static" data-keyboard="false" id="addAdmin" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Product Data</h5>
+                        <h5 class="modal-title" id="data2">Update Product Data</h5>
+                        <button type="button" onclick="clearData()" id="close" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label> PRODUCT ID </label>
+                            <input type="text" name="productid" id="productid" class="form-control"
+                                placeholder="Enter Product Id">
+                        </div>
+                        <div class="form-group">
+                            <label> PRODUCT NAME </label>
+                            <input type="text" name="productname" id="productname" class="form-control"
+                                placeholder="Enter Product Name">
+                        </div>
+                        <div class="form-group">
+                            <label>IMAGE</label><br>
+                            <img id="imgedit" alt="Select Image">
+                            <input type="file" name="image" id="image" onchange="readURL(this)" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>PRICE</label>
+                            <input type="number" name="price" id="price" class="form-control" placeholder="Enter price">
+                        </div>
+                        <div class="form-group">
+                            <label>DESCRIPTION</label>
+                            <textarea name="description" id="description" cols="30" rows="10" class="form-control"
+                                placeholder="Enter Description"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="clearData()" id="cancel"
+                            data-dismiss="modal">Close</button>
+                        <button type="submit" id="submit" onclick="addData()" class="btn btn-primary">Add data</button>
+                        <button type="submit" id="submit2" class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Product Profile
+                        <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#addAdmin">
+                            Add Product
+                        </button>
+                        <div class="btn-group ml-3">
+                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                Filter By
+                            </button>
+                            <div class="dropdown-menu">
+                                <button type="button" onclick="changeBy(this.id)" id="idFirst"
+                                    class="btn">Product-Id</button>
+                                <button type="button" onclick="changeBy(this.id)" id="nameFirst"
+                                    class="btn">Product-Name</button>
+                                <hr class="dropdown-divider">
+                                <button type="button" onclick="changeBy(this.id)" id="lowFirst" class="btn">
+                                    (Low to High)</button>
+                                <button type="button" onclick="changeBy(this.id)" id="highFirst" class="btn">
+                                    (High to Low)</button>
+                            </div>
+                        </div><br><br>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Search</label>
+                            <input type="text" class="form-control" onkeyup="searchById()" id="Input1"
+                                placeholder="Search by ID">
+                        </div>
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>PRODUCT ID</th>
+                                    <th>PRODUCT NAME</th>
+                                    <th>IMAGE</th>
+                                    <th>PRICE</th>
+                                    <th>DESCRIPTION</th>
+                                    <th>EDIT</th>
+                                    <th>DELETE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data Here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+<script src="./vendor/jquery/jquery.min.js"></script>
+<script src="./vendor/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="./js/index.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+</html>
